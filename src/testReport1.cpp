@@ -37,9 +37,14 @@ public:
     double area() { return length * width; }
 };
 
-double compute_area(Shape *s)
+// double compute_area(Shape *s)
+// {
+//     return s->area();
+// }
+
+double compute_area(Shape &s)
 {
-    return s->area();
+    return s.area();
 }
 
 int main()
@@ -50,7 +55,7 @@ int main()
     cout << "圆面积：" << c.area() << endl;
     cout << "矩形面积：" << r.area() << endl;
     cout << "通过全局函数计算面积：" << endl;
-    cout << "圆面积：" << compute_area(&c) << endl;
-    cout << "矩形面积：" << compute_area(&r) << endl;
+    cout << "圆面积：" << compute_area(c) << endl;
+    cout << "矩形面积：" << compute_area(r) << endl;
     return 0;
 }
