@@ -1,70 +1,85 @@
 #include <iostream>
-#define Pi 3.14
+#include <vector>
 using namespace std;
 
-class Shape
-{
-public:
-    virtual double area() { return 0; }
-    virtual void show(){};
-};
-
-class Point
+class Matrix
 {
 private:
-    int x;
-    int y;
+    unsigned int row;
+    unsigned int col;
+    vector<vector<int>> data;
 
 public:
-    Point() : x(0), y(0) {}
-    Point(int a = 0) : x(a), y(0) {}
-    Point(int a = 0, int b = 0) : x(a), y(b) {}
-    Point(Point &p)
+    Matrix() {}
+    ~Matrix() {}
+    int getrow() { return row; }
+    int getcol() { return col; }
+    int get(int a, int b) { return data[a][b]; }
+    Matrix operator+(const Matrix &A);
+    friend int operator>>(istream &in, Matrix &B);
+};
+
+int operator>>(istream &in, Matrix &B)
+{
+    cout << "行数:";
+    in >> B.row;
+    cout << "列数:";
+    in >> B.col;
+    cout << "矩阵:" << endl;
+    B.data.resize(B.row);
+    for (unsigned int i = 0; i < B.row; i++)
     {
-        x = p.x;
-        y = p.y;
+        B.data[i].resize(B.col);
+        for (unsigned int j = 0; j < B.col; j++)
+        {
+            in >> B.data[i][j];
+        }
     }
-    ~Point() {}
-};
+    cout << "矩阵输入完成" << endl;
+    return 1;
+}
 
-class Circle : public Shape
+Matrix Matrix::operator+(const Matrix &B)
 {
-private:
-    Point p;
-    int r;
+    Matrix temp;
+    if (B.row != row || B.col != col)
+        cout << "相加的矩阵行列不匹配！" << endl;
+    temp.row = row;
+    temp.col = col;
+    temp.data.resize(temp.row);
+    for (unsigned i = 0; i < row; i++)
+    {
+        temp.data[i].resize(temp.col);
+        for (unsigned j = 0; j < col; j++)
+        {
+            temp.data[i][j] = data[i][j] + B.data[i][j];
+        }
+    }
+    return temp;
+}
 
-public:
-    Circle(int a = 0, int b = 0, int c = 0) : p(a, b), r(c) {}
-    ~Circle() {}
-    double area() { return Pi * r * r; }
-    void show() { cout << "Circle's area:" << this->area() << endl; }
-};
-
-class Rectangle : public Shape
+ostream &operator<<(ostream &ou, Matrix &B)
 {
-private:
-    int length;
-    int width;
-
-public:
-    Rectangle(int a = 0, int b = 0) : length(a), width(b) {}
-    ~Rectangle() {}
-    double area() { return length * width; }
-    void show() { cout << "Rectangle's area:" << this->area() << endl; }
-};
-
-void compute_area(Shape &Y)
-{
-    // Y.area();
-    Y.show();
-    // return Y.area();
+    for (int i = 0; i < B.getrow(); i++)
+    {
+        for (int j = 0; j < B.getcol(); j++)
+        {
+            ou << B.get(i, j) << "  ";
+        }
+        ou << endl;
+    }
+    return ou;
 }
 
 int main()
 {
-    Circle A(1, 1, 4);
-    Rectangle B(2, 9);
-    compute_area(A);
-    compute_area(B);
+    Matrix a, b, c;
+    cin >> a;
+    cout << "第一个矩阵构造完成" << endl;
+    cin >> b;
+    cout << "第二个矩阵构造完成" << endl;
+    c = a + b;
+    cout << "两个矩阵的和为:" << endl;
+    cout << c;
     return 1;
 }

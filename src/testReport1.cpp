@@ -49,7 +49,7 @@ double compute_area(Shape &s)
 
 int main()
 {
-    Circle c(0, 0, 1);
+    Circle c(1, 1, 1);
     Rectangle r(1, 2);
     cout << "通过各自的area函数计算面积：" << endl;
     cout << "圆面积：" << c.area() << endl;
