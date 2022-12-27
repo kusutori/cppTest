@@ -81,7 +81,7 @@ a_1,a_2
 0 & 1\\
 1 & 1
 \end{bmatrix}
-=
+\=
 \begin{bmatrix}
 a_2,a_3
 \end{bmatrix}
@@ -100,7 +100,7 @@ a_1,a_2
 0 & 1\\
 1 & 1
 \end{bmatrix}^{n-2}
-=
+\=
 \begin{bmatrix}
 a_{n-1},a_{n}
 \end{bmatrix}
